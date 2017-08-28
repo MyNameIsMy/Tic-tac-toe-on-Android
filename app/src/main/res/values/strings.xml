@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Tic-tac-toe</string>
+    <string name="play_button">Play</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="null_point" />
+    <string name="x_point">X</string>
+    <string name="o_point">O</string>
+    <string name="select_team">Select team</string>
+    <string name="title_activity_winer">WinerActivity</string>
+</resources>
