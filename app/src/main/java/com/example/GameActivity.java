@@ -10,7 +10,7 @@ import com.example.tic_tac_toe.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements GameInterface {
     Button[][] buttons;
     String[][] stringValueOfButtons;
     String myTeam;
@@ -102,7 +102,16 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    void setTurn(int turn){
+    private void setStringValueOfButtons(){
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                stringValueOfButtons[i][j] = buttons[i][j].getText().toString();
+            }
+        }
+    }
+
+    @Override
+    public void setTurn(int turn) {
         int i = 0;
         for (Button[] bs : buttons){
             for (Button button : bs){
@@ -111,14 +120,6 @@ public class GameActivity extends AppCompatActivity {
                         button.setText(enemyTeam);
                     i++;
                 }
-            }
-        }
-    }
-
-    private void setStringValueOfButtons(){
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                stringValueOfButtons[i][j] = buttons[i][j].getText().toString();
             }
         }
     }
