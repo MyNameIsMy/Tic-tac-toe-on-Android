@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.vladimir.tic_tac_toe.GameActivity">
+    tools:context="com.example.GameActivity">
 
     <Button
         android:id="@+id/button1"
@@ -40,7 +40,8 @@
         android:layout_marginTop="0dp"
         android:text="@string/null_point"
         app:layout_constraintLeft_toLeftOf="@+id/button6"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        app:layout_constraintTop_toTopOf="@+id/button2"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:id="@+id/button4"
