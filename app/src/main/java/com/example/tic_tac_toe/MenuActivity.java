@@ -1,11 +1,9 @@
-package com.example;
+package com.example.tic_tac_toe;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.tic_tac_toe.R;
 
 public class MenuActivity extends AppCompatActivity {
 

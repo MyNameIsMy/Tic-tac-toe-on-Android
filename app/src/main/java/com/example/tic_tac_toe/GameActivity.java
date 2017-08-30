@@ -1,16 +1,14 @@
-package com.example;
+package com.example.tic_tac_toe;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.tic_tac_toe.R;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity implements GameInterface {
+public class GameActivity extends AppCompatActivity implements GamePresentation {
     Button[][] buttons;
     String[][] stringValueOfButtons;
     String myTeam;

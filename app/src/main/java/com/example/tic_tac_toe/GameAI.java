@@ -1,4 +1,4 @@
-package com.example;
+package com.example.tic_tac_toe;
 
 import java.util.ArrayList;
 

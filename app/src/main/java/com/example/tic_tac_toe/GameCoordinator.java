@@ -1,18 +1,18 @@
-package com.example;
+package com.example.tic_tac_toe;
 
 class GameCoordinator {
     private String[][] bns = new String[3][3];
     private String playerTeam;
     private String botTeam;
 
-    GameCoordinator(String playerTeam, String botTeam, String[][] buttons, GameActivity gameActivity){
+    GameCoordinator(String playerTeam, String botTeam, String[][] buttons, GamePresentation gamePresentation){
         this.playerTeam = playerTeam;
         this.botTeam = botTeam;
         arrayToArray(buttons, bns);
-        moveCoordinator(gameActivity);
+        moveCoordinator(gamePresentation);
     }
 
-    private void moveCoordinator(GameActivity act){
+    private void moveCoordinator(GamePresentation act){
         if (botTeam.equals(getTeam(turnNumber())))
             act.setTurn(new GameAI(bns, botTeam, playerTeam).moveMaking(turnNumber()));
     }
