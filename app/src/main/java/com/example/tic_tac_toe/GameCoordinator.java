@@ -8,6 +8,10 @@ class GameCoordinator {
     GameCoordinator(String playerTeam, String botTeam, String[][] buttons, GamePresentation gamePresentation){
         this.playerTeam = playerTeam;
         this.botTeam = botTeam;
+        startGame(buttons, gamePresentation);
+    }
+
+    void startGame(String[][] buttons, GamePresentation gamePresentation){
         arrayToArray(buttons, bns);
         moveCoordinator(gamePresentation);
     }

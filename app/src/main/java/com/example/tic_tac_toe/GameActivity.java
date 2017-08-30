@@ -13,6 +13,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
     String[][] stringValueOfButtons;
     String myTeam;
     String enemyTeam;
+    GameCoordinator gameCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
 
         enemyTeam = getBotTeam(myTeam);
 
-        GameCoordinator coordinator = new GameCoordinator(myTeam, enemyTeam, stringValueOfButtons, this);
+        gameCoordinator = new GameCoordinator(myTeam, enemyTeam, stringValueOfButtons, this);
     }
 
     @OnClick(R.id.button1)
@@ -96,7 +97,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         if (button.getText().equals("")){
             button.setText(myTeam);
             setStringValueOfButtons();
-            new GameCoordinator(myTeam, enemyTeam, stringValueOfButtons, this);
+            gameCoordinator.startGame(stringValueOfButtons, this);
         }
     }
 
