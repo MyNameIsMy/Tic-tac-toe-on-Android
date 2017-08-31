@@ -8,7 +8,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TeamSelectionActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.tic-tac-toe.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +27,7 @@ public class TeamSelectionActivity extends AppCompatActivity {
 
     public void intentStarter(String ox){
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, ox);
+        intent.putExtra("your team", ox);
         startActivity(intent);
     }
 }

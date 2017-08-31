@@ -10,7 +10,6 @@ import butterknife.OnClick;
 
 public class GameActivity extends AppCompatActivity implements GamePresentation {
     Button[][] buttons;
-    String[][] stringValueOfButtons;
     String myTeam;
     String enemyTeam;
     GameCoordinator gameCoordinator;
@@ -22,7 +21,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        myTeam = intent.getStringExtra(TeamSelectionActivity.EXTRA_MESSAGE);
+        myTeam = intent.getStringExtra("your team");
 
         buttons = new Button[3][3];
 
@@ -36,12 +35,12 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         buttons[2][1] = (Button)findViewById(R.id.button8);
         buttons[2][2] = (Button)findViewById(R.id.button9);
 
-        stringValueOfButtons = new String[3][3];
-        setStringValueOfButtons();
+        enemyTeam = myTeam.equals("x") ? "o" : "x";
 
-        enemyTeam = getBotTeam(myTeam);
+        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam));
 
-        gameCoordinator = new GameCoordinator(myTeam, enemyTeam, stringValueOfButtons, this);
+        if (myTeam.equals("o"))
+            setEnemyMarker(gameCoordinator.coordinatingOfMoveMaking(10));
     }
 
     @OnClick(R.id.button1)
@@ -89,38 +88,40 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         setYourMarker(button);
     }
 
-    private String getBotTeam(String playerTeam){
-        return playerTeam.equals("x") ? "o" : "x";
-    }
-
     public void setYourMarker(Button button){
         if (button.getText().equals("")){
             button.setText(myTeam);
-            setStringValueOfButtons();
-            gameCoordinator.startGame(stringValueOfButtons, this);
+            setEnemyMarker(gameCoordinator.coordinatingOfMoveMaking(getMoveIndex(button)));
         }
     }
 
-    private void setStringValueOfButtons(){
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                stringValueOfButtons[i][j] = buttons[i][j].getText().toString();
-            }
-        }
-    }
-
-    @Override
-    public void setTurn(int turn) {
-        int i = 0;
+    private void setEnemyMarker(int move){
+        int index = 0;
         for (Button[] bs : buttons){
-            for (Button button : bs){
-                if (button.getText().equals("")){
-                    if (i == turn)
-                        button.setText(enemyTeam);
-                    i++;
+            for (Button b : bs) {
+                if (b.getText().equals("")) {
+                    if (index == move)
+                        b.setText(enemyTeam);
+                    index++;
                 }
             }
         }
+    }
+
+    private int getNumberOfTeam(String team) {
+        return team.equals("x") ? 1 : 2; }
+
+    private int getMoveIndex(Button button){
+        int index = 0;
+        out:
+        for (Button[] bs : buttons){
+            for (Button b : bs) {
+                if (b.equals(button))
+                    break out;
+                index++;
+            }
+        }
+        return index;
     }
 }
 
