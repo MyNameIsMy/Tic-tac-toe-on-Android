@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GameActivity extends AppCompatActivity implements GamePresentation {
-    Button[][] buttons;
+    Button[][] field;
     String myTeam;
     String enemyTeam;
     GameCoordinator gameCoordinator;
@@ -23,24 +23,25 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         Intent intent = getIntent();
         myTeam = intent.getStringExtra("your team");
 
-        buttons = new Button[3][3];
+        field = new Button[3][3];
 
-        buttons[0][0] = (Button)findViewById(R.id.button1);
-        buttons[0][1] = (Button)findViewById(R.id.button2);
-        buttons[0][2] = (Button)findViewById(R.id.button3);
-        buttons[1][0] = (Button)findViewById(R.id.button4);
-        buttons[1][1] = (Button)findViewById(R.id.button5);
-        buttons[1][2] = (Button)findViewById(R.id.button6);
-        buttons[2][0] = (Button)findViewById(R.id.button7);
-        buttons[2][1] = (Button)findViewById(R.id.button8);
-        buttons[2][2] = (Button)findViewById(R.id.button9);
+        field[0][0] = (Button)findViewById(R.id.button1);
+        field[0][1] = (Button)findViewById(R.id.button2);
+        field[0][2] = (Button)findViewById(R.id.button3);
+        field[1][0] = (Button)findViewById(R.id.button4);
+        field[1][1] = (Button)findViewById(R.id.button5);
+        field[1][2] = (Button)findViewById(R.id.button6);
+        field[2][0] = (Button)findViewById(R.id.button7);
+        field[2][1] = (Button)findViewById(R.id.button8);
+        field[2][2] = (Button)findViewById(R.id.button9);
 
         enemyTeam = myTeam.equals("x") ? "o" : "x";
 
-        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam));
+        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(myTeam), this);
 
-        if (myTeam.equals("o"))
-            setEnemyMarker(gameCoordinator.coordinatingOfMoveMaking(10));
+        gameCoordinator.coordinatingOfGame();
+
+        setFieldOfButtons();
     }
 
     @OnClick(R.id.button1)
@@ -88,40 +89,49 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         setYourMarker(button);
     }
 
-    public void setYourMarker(Button button){
+    private void setYourMarker(Button button){
         if (button.getText().equals("")){
-            button.setText(myTeam);
-            setEnemyMarker(gameCoordinator.coordinatingOfMoveMaking(getMoveIndex(button)));
+            setField(button);
+            gameCoordinator.coordinatingOfGame();
+            setFieldOfButtons();
         }
     }
 
-    private void setEnemyMarker(int move){
-        int index = 0;
-        for (Button[] bs : buttons){
-            for (Button b : bs) {
-                if (b.getText().equals("")) {
-                    if (index == move)
-                        b.setText(enemyTeam);
-                    index++;
-                }
+    private void setField(Button button){
+        for (int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if (field[i][j].equals(button))
+                    gameCoordinator.setField(i, j, getNumberOfTeam(myTeam));
+            }
+        }
+    }
+
+    private void setFieldOfButtons(){
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                field[i][j].setText(getMarkerFromNumber(gameCoordinator.getField(i, j)));
             }
         }
     }
 
     private int getNumberOfTeam(String team) {
-        return team.equals("x") ? 1 : 2; }
+        return team.equals("x") ? 1 : 2;
+    }
 
-    private int getMoveIndex(Button button){
-        int index = 0;
-        out:
-        for (Button[] bs : buttons){
-            for (Button b : bs) {
-                if (b.equals(button))
-                    break out;
-                index++;
-            }
-        }
-        return index;
+    private String getMarkerFromNumber(int number){
+        if (number == 2)
+            return "o";
+        if (number == 1)
+            return "x";
+        else
+            return "";
+    }
+
+    public void toWinnerActivity(int team){
+        String winner = team == 1 ? enemyTeam : myTeam;
+        Intent intent = new Intent(this, WinnerActivity.class);
+        intent.putExtra("winner", winner);
+        startActivity(intent);
     }
 }
 
