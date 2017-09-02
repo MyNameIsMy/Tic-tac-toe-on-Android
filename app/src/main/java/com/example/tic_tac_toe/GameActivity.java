@@ -1,12 +1,17 @@
 package com.example.tic_tac_toe;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+interface GamePresentation {
+    void updateField(int x, int y, int team);
+    void toWinnerActivity(int team);
+}
 
 public class GameActivity extends AppCompatActivity implements GamePresentation {
     Button[][] field;
@@ -38,10 +43,6 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         enemyTeam = myTeam.equals("x") ? "o" : "x";
 
         gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(myTeam), this);
-
-        gameCoordinator.coordinatingOfGame();
-
-        setFieldOfButtons();
     }
 
     @OnClick(R.id.button1)
@@ -92,9 +93,11 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
     private void setYourMarker(Button button){
         if (button.getText().equals("")){
             setField(button);
-            gameCoordinator.coordinatingOfGame();
-            setFieldOfButtons();
         }
+    }
+
+    public void updateField(int x, int y, int team) {
+        field[x][y].setText(getMarkerFromNumber(team));
     }
 
     private void setField(Button button){
@@ -102,14 +105,6 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
             for(int j = 0; j < 3; j++){
                 if (field[i][j].equals(button))
                     gameCoordinator.setField(i, j, getNumberOfTeam(myTeam));
-            }
-        }
-    }
-
-    private void setFieldOfButtons(){
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                field[i][j].setText(getMarkerFromNumber(gameCoordinator.getField(i, j)));
             }
         }
     }
