@@ -16,16 +16,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".MenuActivity">
+=======
+        <activity android:name="com.example.tic_tac_toe.MenuActivity">
+>>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".GameActivity" />
         <activity android:name=".TeamSelectionActivity" />
         <activity android:name=".WinnerActivity" />
+=======
+        <activity android:name="com.example.tic_tac_toe.GameActivity" />
+        <activity android:name="com.example.tic_tac_toe.TeamSelectionActivity" />
+        <activity android:name="com.example.tic_tac_toe.WinnerActivity" />
+>>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
     </application>
 
 </manifest>
