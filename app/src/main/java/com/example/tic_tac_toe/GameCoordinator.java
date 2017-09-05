@@ -1,8 +1,5 @@
 package com.example.tic_tac_toe;
 
-
-import android.content.Intent;
-
 class GameCoordinator implements GameField {
     private int[][] field = new int[3][3];
     private GameAI gameAI;
@@ -18,11 +15,11 @@ class GameCoordinator implements GameField {
     }
 
     void coordinatingOfGame(){
-        if (getWinner() != 0)
+        if (getWinner() != 0 || getDraw())
             presentation.toWinnerActivity(getWinner());
         if (botTeam == getTeam(getMoveNumber()))
             gameAI.moveMaking();
-        if (getWinner() != 0)
+        if (getWinner() != 0 || getDraw())
             presentation.toWinnerActivity(getWinner());
     }
 
@@ -106,5 +103,15 @@ class GameCoordinator implements GameField {
 
     public int getTeam(int tn){
         return tn % 2 == 0 ? 1 : 2;
+    }
+
+    private boolean getDraw(){
+        for (int[] fd : field){
+            for (int f : fd){
+                if (f == 0)
+                    return false;
+            }
+        }
+        return true;
     }
 }

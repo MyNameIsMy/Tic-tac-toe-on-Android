@@ -1,16 +1,16 @@
 package com.example.tic_tac_toe;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameActivity extends AppCompatActivity implements GamePresentation {
+public class GameActivity extends Activity implements GamePresentation {
     Button[][] field;
-    String myTeam;
+    String playerTeam;
     String enemyTeam;
     GameCoordinator gameCoordinator;
 
@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        myTeam = intent.getStringExtra("your team");
+        playerTeam = intent.getStringExtra("your team");
 
         field = new Button[3][3];
 
@@ -35,9 +35,9 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         field[2][1] = (Button)findViewById(R.id.button8);
         field[2][2] = (Button)findViewById(R.id.button9);
 
-        enemyTeam = myTeam.equals("x") ? "o" : "x";
+        enemyTeam = playerTeam.equals("x") ? "o" : "x";
 
-        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(myTeam), this);
+        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(playerTeam), this);
 
         gameCoordinator.coordinatingOfGame();
 
@@ -101,7 +101,7 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
         for (int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 if (field[i][j].equals(button))
-                    gameCoordinator.setField(i, j, getNumberOfTeam(myTeam));
+                    gameCoordinator.setField(i, j, getNumberOfTeam(playerTeam));
             }
         }
     }
@@ -128,9 +128,13 @@ public class GameActivity extends AppCompatActivity implements GamePresentation 
     }
 
     public void toWinnerActivity(int team){
-        String winner = team == 1 ? enemyTeam : myTeam;
         Intent intent = new Intent(this, WinnerActivity.class);
-        intent.putExtra("winner", winner);
+        if (team == 1)
+            intent.putExtra("winner", enemyTeam);
+        if (team == -1)
+            intent.putExtra("winner", playerTeam);
+        if (team == 0)
+            intent.putExtra("winner", "draw");
         startActivity(intent);
     }
 }

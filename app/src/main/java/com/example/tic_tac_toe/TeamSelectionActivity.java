@@ -1,13 +1,13 @@
 package com.example.tic_tac_toe;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TeamSelectionActivity extends AppCompatActivity {
+public class TeamSelectionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
