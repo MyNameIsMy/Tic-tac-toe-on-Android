@@ -1,25 +1,10 @@
 package com.example.tic_tac_toe;
 
-<<<<<<< HEAD
-=======
-interface GameField {
-    int getField(int v, int h);
-
-    void setField(int x, int y, int marker);
-
-    int getWinner(int[][] field);
-
-    int getSize();
-}
-
-
->>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
 class GameCoordinator implements GameField {
-    private int[][] mField = new int[getSize()][getSize()];
+    private int[][] field = new int[3][3];
     private GameAI gameAI;
     private int botTeam;
     private int playerTeam;
-    private int move;
     private GamePresentation presentation;
 
     GameCoordinator(int botTeam, int playerTeam, GamePresentation presentation){
@@ -27,18 +12,8 @@ class GameCoordinator implements GameField {
         this.playerTeam = playerTeam;
         this.presentation = presentation;
         gameAI = new GameAI(botTeam, this);
-        move = 0;
-
-        if (getTeam() == botTeam) {
-            nextMove();
-        }
     }
 
-    public int getSize() {
-        return 3;
-    }
-
-<<<<<<< HEAD
     void coordinatingOfGame(){
         if (getWinner() != 0 || getDraw())
             presentation.toWinnerActivity(getWinner());
@@ -46,32 +21,17 @@ class GameCoordinator implements GameField {
             gameAI.moveMaking();
         if (getWinner() != 0 || getDraw())
             presentation.toWinnerActivity(getWinner());
-=======
-    private void nextMove(){
-        if (botTeam == getTeam())
-            gameAI.makeMove();
->>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
     }
 
     public int getField(int v, int h) {
-        return mField[v][h];
+        return field[v][h];
     }
 
-    public void setField(int x, int y, int marker) {
-        mField[x][y] = marker;
-        presentation.updateField(x, y, marker);
-
-        move++;
-
-        int winner = getWinner(mField);
-
-        if (winner != 0)
-            presentation.toWinnerActivity(winner);
-        else
-            nextMove();
+    public void setField(int v, int h, int marker) {
+        field[v][h] = marker;
     }
 
-    public int getWinner(int[][] field){
+    public int getWinner(){
         for (int i = 0; i < 3; i++){
             int bt = 0;
             int pt = 0;
@@ -130,8 +90,19 @@ class GameCoordinator implements GameField {
         return 0;
     }
 
-    public int getTeam(){
-        return move % 2 == 0 ? 1 : 2;
+    public int getMoveNumber(){
+        int mn = 0;
+        for (int[] bs : field){
+            for (int b : bs){
+                if (b != 0)
+                    mn++;
+            }
+        }
+        return mn;
+    }
+
+    public int getTeam(int tn){
+        return tn % 2 == 0 ? 1 : 2;
     }
 
     private boolean getDraw(){

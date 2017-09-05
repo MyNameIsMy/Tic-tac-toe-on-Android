@@ -2,20 +2,11 @@ package com.example.tic_tac_toe;
 
 import android.app.Activity;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
-import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
->>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
 import android.os.Bundle;
 import android.widget.Button;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-interface GamePresentation {
-    void updateField(int x, int y, int team);
-    void toWinnerActivity(int team);
-}
 
 public class GameActivity extends Activity implements GamePresentation {
     Button[][] field;
@@ -46,15 +37,11 @@ public class GameActivity extends Activity implements GamePresentation {
 
         enemyTeam = playerTeam.equals("x") ? "o" : "x";
 
-<<<<<<< HEAD
         gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(playerTeam), this);
 
         gameCoordinator.coordinatingOfGame();
 
         setFieldOfButtons();
-=======
-        gameCoordinator = new GameCoordinator(getNumberOfTeam(enemyTeam), getNumberOfTeam(myTeam), this);
->>>>>>> a2a6c9507b0f6042c7571fc75211e884e9383569
     }
 
     @OnClick(R.id.button1)
@@ -105,11 +92,9 @@ public class GameActivity extends Activity implements GamePresentation {
     private void setYourMarker(Button button){
         if (button.getText().equals("")){
             setField(button);
+            gameCoordinator.coordinatingOfGame();
+            setFieldOfButtons();
         }
-    }
-
-    public void updateField(int x, int y, int team) {
-        field[x][y].setText(getMarkerFromNumber(team));
     }
 
     private void setField(Button button){
@@ -117,6 +102,14 @@ public class GameActivity extends Activity implements GamePresentation {
             for(int j = 0; j < 3; j++){
                 if (field[i][j].equals(button))
                     gameCoordinator.setField(i, j, getNumberOfTeam(playerTeam));
+            }
+        }
+    }
+
+    private void setFieldOfButtons(){
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                field[i][j].setText(getMarkerFromNumber(gameCoordinator.getField(i, j)));
             }
         }
     }
