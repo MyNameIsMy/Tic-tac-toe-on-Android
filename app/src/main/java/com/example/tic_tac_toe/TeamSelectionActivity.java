@@ -26,7 +26,7 @@ public class TeamSelectionActivity extends Activity {
     }
 
     public void intentStarter(String ox){
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, ScreenBeforeGameActivity.class);
         intent.putExtra("your team", ox);
         startActivity(intent);
     }
